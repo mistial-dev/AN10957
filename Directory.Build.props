@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no" ?>
+<Project>
+    <!-- Global Build Settings -->
+    <PropertyGroup>
+        <TargetFramework>net60</TargetFramework>
+        <Company>Mistial Developer</Company>
+        <NeutralLanguage>en-US-POSIX</NeutralLanguage>
+    </PropertyGroup>
+
+    <!-- Ensure that reproducible builds can be built in isolation -->
+    <Sdk Name="DotNet.ReproducibleBuilds.Isolated" Version="1.1.1"/>
+
+    <!-- Ensure that all builds are reproducible -->
+    <ItemGroup>
+        <PackageReference Include="DotNet.ReproducibleBuilds" Version="1.1.1" PrivateAssets="All"/>
+    </ItemGroup>
+
+    <!-- StyleCop Style Management -->
+    <ItemGroup>
+        <PackageReference Include="StyleCop.Analyzers" Version="1.1.118">
+            <PrivateAssets>all</PrivateAssets>
+            <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
+        </PackageReference>
+        <AdditionalFiles Include="$(MSBuildThisFileDirectory)/stylecop.json"/>
+    </ItemGroup>
+
+    <!-- C# -->
+    <PropertyGroup Condition="'$(MSBuildProjectExtension)' == '.csproj'">
+        <!-- Avoid things like timestamps, which can make builds not reproducible -->
+        <Deterministic>true</Deterministic>
+
+        <!-- This will trigger warnings when no inline documentation is specified -->
+        <GenerateDocumentationFile>true</GenerateDocumentationFile>
+        <DocumentationFile>bin\$(MSBuildProjectName).xml</DocumentationFile>
+    </PropertyGroup>
+</Project>
+
