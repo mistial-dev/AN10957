@@ -1,5 +1,5 @@
 ﻿namespace AN10957;
 
-public class Class1
+public class AN10957
 {
 }
